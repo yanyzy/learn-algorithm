@@ -1,20 +1,19 @@
 (ns QuickSort)
 
-(defn get-smaller [items x]
+(defn get-list [items x y]
   (cond (empty? items) '()
-        (> x (first items)) (concat (list (first items)) (get-smaller (rest items) x))
-        :else (get-smaller (rest items) x)))
-
-(defn get-larger [items x]
-  (cond (empty? items) '()
-        (< x (first items)) (concat (list (first items)) (get-larger (rest items) x))
-        :else (get-larger (rest items) x)))
+        (= 0 y) (if (> x (first items))
+                  (concat (list (first items)) (get-list (rest items) x y))
+                  (get-list (rest items) x y))
+        :else (if (< x (first items))
+                (concat (list (first items)) (get-list (rest items) x y))
+                (get-list (rest items) x y))))
 
 (defn quick-sort [items]
-  (let [left-itmes (get-smaller items (first items))]
-    (let [right-items (get-larger items (first items))]
+  (let [left-itmes (get-list items (first items) 0)]
+    (let [right-items (get-list items (first items) 1)]
       (cond (empty? left-itmes) (concat (list (first items)) right-items)
             (empty? right-items) (concat left-itmes (list (first items)))
             :else (concat (quick-sort left-itmes) (list (first items)) (quick-sort right-items))))))
 
-(println (quick-sort '(77 33 2 98  88 88 3 90 22 75)))
+(println (quick-sort '(77 33 2 98 88 88 3 90 22 75)))
