@@ -1,19 +1,17 @@
 (ns InsertionSort)
 
+(defn insert-sort [items]
+  (letfn [
+          (insert-item' [items x]
+            (cond (empty? items) (list x)
+                  (< x (first items)) (concat (list x) items)
+                  :else (cons (first items) (insert-item' (rest items) x))))
 
-;未完待续
+          (insert-sort' [newItems items]
+            (if (empty? items) newItems
+                               (insert-sort' (insert-item' newItems (first items)) (rest items))))]
+    (insert-sort' (list (first items)) (rest items))))
 
-(defn insert-sort [items])
+(println (insert-sort '(64 44 99 4 3 22)))
 
-(defn insert-sort' [x items]
-  (cond (empty? items) (list x)
-        (< x (last items)) (concat (insert-sort' x (drop-last items)) (list (last items) ))
-        :else (concat items (list x))))
-
-(defn get-list [x items]
-  (if (= x (first items))
-    '()
-    (concat (list (first items) )  (get-list x (rest items)))))
-
-(println (get-list 3 '(64 44 99 4 3 22)))
 
