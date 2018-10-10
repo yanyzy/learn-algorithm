@@ -1,12 +1,10 @@
 (ns InsertionSort)
 
 (defn insert-sort [items]
-  (letfn [
-          (insert-item' [items x]
+  (letfn [(insert-item' [items x]
             (cond (empty? items) (list x)
                   (< x (first items)) (concat (list x) items)
                   :else (cons (first items) (insert-item' (rest items) x))))
-
           (insert-sort' [newItems items]
             (if (empty? items) newItems
                                (insert-sort' (insert-item' newItems (first items)) (rest items))))]
